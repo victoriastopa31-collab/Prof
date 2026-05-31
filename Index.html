@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>Mon Programme −8 kg</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif;background:#F7F4F0;color:#111;max-width:480px;margin:0 auto;min-height:100vh}
+.hero{background:linear-gradient(160deg,#0D1B2A 0%,#1B2A3B 55%,#263344 100%);padding:32px 20px 24px}
+.hero-tag{font-size:10px;letter-spacing:4px;color:#7FDBCA;font-family:monospace;text-transform:uppercase;margin-bottom:10px}
+.hero h1{color:#fff;font-size:26px;font-weight:400;line-height:1.2;margin-bottom:4px}
+.hero em{color:#7FDBCA}
+.hero p{color:#A8C5C0;font-size:13px;margin-bottom:18px}
+.stats{display:flex;background:rgba(255,255,255,0.07);border-radius:12px;overflow:hidden}
+.stat{flex:1;padding:10px 4px;text-align:center;border-right:1px solid rgba(255,255,255,0.08)}
+.stat:last-child{border-right:none}
+.stat-v{font-size:15px;font-weight:700;color:#fff}
+.stat-l{font-size:9px;color:#7FDBCA;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+.tabs{display:flex;background:#fff;border-bottom:1px solid #E8E3DC;position:sticky;top:0;z-index:100;overflow-x:auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:12px 10px;border:none;background:transparent;border-bottom:2px solid transparent;color:#AAA;font-size:11px;cursor:pointer;white-space:nowrap;font-family:-apple-system,sans-serif}
+.tab.on{border-bottom-color:#0D1B2A;color:#0D1B2A;font-weight:700}
+.pg{display:none;padding:14px}
+.pg.on{display:block}
+.pg-np{display:none}
+.pg-np.on{display:block}
+.card{background:#fff;border-radius:14px;margin-bottom:10px;box-shadow:0 1px 8px rgba(0,0,0,.05);overflow:hidden}
+.card-hdr{padding:14px 16px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.card-hdr:active{background:#F9F9F9}
+.card-body{display:none;padding:0 16px 16px;border-top:1px solid #F5F5F5}
+.card-body.open{display:block}
+.arr{color:#CCC;font-size:14px;margin-left:auto;flex-shrink:0}
+.li{display:flex;gap:10px;align-items:flex-start;padding:8px 0;border-bottom:1px solid #F5F5F5;font-size:13px;color:#444;line-height:1.5}
+.li:last-child{border-bottom:none}
+.li-ic{font-size:16px;flex-shrink:0;margin-top:1px}
+.ph-btns{display:flex;gap:8px;margin-bottom:14px}
+.ph-btn{flex:1;padding:10px 4px;border-radius:12px;border:1.5px solid #DDD;background:#fff;color:#888;cursor:pointer;font-size:11px;font-weight:700;font-family:monospace;text-align:center;line-height:1.5}
+.sub-nav{display:flex;gap:6px;padding:12px 14px;overflow-x:auto;background:#FAF8F5;border-bottom:1px solid #EDE8E0;margin:-14px -14px 14px}
+.sub-nav::-webkit-scrollbar{display:none}
+.sub-btn{flex-shrink:0;padding:7px 12px;border-radius:20px;border:1.5px solid #DDD;background:#fff;color:#777;font-size:12px;font-weight:700;cursor:pointer}
+.tag{font-size:10px;padding:2px 7px;border-radius:10px;font-family:monospace;font-weight:700;display:inline-block;margin:0 2px 3px 0}
+.dk{background:#0D1B2A;border-radius:14px;padding:16px;margin-bottom:12px}
+.dk-r{display:flex;gap:10px;margin-bottom:9px;align-items:flex-start}
+.dk-r:last-child{margin-bottom:0}
+.dk-t{background:rgba(127,219,202,.15);border-radius:6px;padding:3px 7px;font-size:10px;color:#7FDBCA;font-family:monospace;white-space:nowrap;flex-shrink:0}
+.dk-tx{color:#C8DDD9;font-size:13px;line-height:1.5}
+.wscr{overflow-x:auto;margin-bottom:14px}
+.wscr::-webkit-scrollbar{display:none}
+.wbtns{display:flex;gap:6px;padding-bottom:4px;width:max-content}
+.wbtn{padding:8px 12px;border-radius:10px;border:1.5px solid #DDD;background:#fff;color:#888;font-size:11px;font-weight:700;cursor:pointer;font-family:monospace}
+.pb-wrap{display:flex;align-items:center;gap:10px}
+.pb{flex:1;height:8px;background:rgba(0,0,0,.1);border-radius:10px;overflow:hidden}
+.pb-fill{height:100%;border-radius:10px;transition:width .3s ease}
+.cs-hdr{padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:12px}
+.cs-hdr:active{background:#F9F9F9}
+.cs-body{display:none;border-top:1px solid #F5F5F5;padding:6px 16px 12px}
+.cs-body.open{display:block}
+.ci{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #F5F5F5;cursor:pointer}
+.ci:last-child{border-bottom:none}
+.ci:active{opacity:.7}
+.cb{width:24px;height:24px;border-radius:7px;border:2px solid #DDD;background:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s ease;font-size:14px;color:transparent}
+.cb.on{color:#fff}
+.cl{flex:1;font-size:13px;color:#333;line-height:1.4}
+.cl.done{text-decoration:line-through;color:#AAA}
+.cd{font-size:10px;font-family:monospace;font-weight:700;margin-right:5px}
+.rw{position:relative;width:42px;height:42px;flex-shrink:0}
+.rw svg{transform:rotate(-90deg);width:42px;height:42px}
+.rw-pct{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;font-weight:700}
+.wgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-bottom:12px}
+.dc{border-radius:12px;padding:10px 4px;text-align:center;cursor:pointer;border:1.5px solid transparent}
+.dc-ic{font-size:18px;margin-bottom:4px}
+.dc-d{font-size:11px;font-weight:700}
+.dc-l{font-size:9px;margin-top:2px;line-height:1.3}
+.victory{border-radius:14px;padding:18px;text-align:center;margin-bottom:14px}
+.reset-btn{width:100%;padding:10px;border-radius:10px;border:1px solid #DDD;background:#fff;color:#AAA;font-size:12px;cursor:pointer;margin-bottom:20px;font-family:-apple-system,sans-serif}
+.badge{display:inline-block;border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700;color:#fff;margin-top:6px}
+.exo-card{background:#F9F7F4;border-radius:10px;padding:11px;margin-bottom:7px}
+.bloc-lbl{border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;margin-bottom:8px;display:inline-block;color:#fff}
+.tupp-ic{width:52px;height:52px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.prot-row{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.1)}
+.prot-row:last-child{border-bottom:none}
+.bilan-row{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #F5F5F5}
+.bilan-row:last-child{border-bottom:none}
+.bilan-input{border:1.5px solid #DDD;border-radius:8px;padding:6px 10px;font-size:13px;width:110px;text-align:center;font-family:-apple-system,sans-serif;outline:none}
+.bilan-input:focus{border-color:#0D1B2A}
+.cycle-s{display:flex;gap:10px;align-items:center;padding:8px;border-radius:10px;margin-bottom:5px}
+.cycle-n{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Programme · 12 semaines · Personnalisé</div>
+  <h1>−8 kg vers <em>69 kg</em></h1>
+  <p>Végétarienne · Marathon runner · Accro au sucre → on règle ça.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-v">77 kg</div><div class="stat-l">Actuel</div></div>
+    <div class="stat"><div class="stat-v">69 kg</div><div class="stat-l">Objectif</div></div>
+    <div class="stat"><div class="stat-v">26.9</div><div class="stat-l">IMC</div></div>
+    <div class="stat"><div class="stat-v">12 sem.</div><div class="stat-l">Durée</div></div>
+  </div>
+</div>
+
+<div class="tabs" id="tabs">
+  <button class="tab on" onclick="go('cl')">✅ Ma semaine</button>
+  <button class="tab" onclick="go('prog')">🔥 Programme</button>
+  <button class="tab" onclick="go('plan')">📅 Planning</button>
+  <button class="tab" onclick="go('rep')">🍽️ Repas</button>
+  <button class="tab" onclick="go('tupp')">📦 Tupps</button>
+  <button class="tab" onclick="go('sea')">💪 Séances</button>
+  <button class="tab" onclick="go('suc')">🍬 Sucre</button>
+  <button class="tab" onclick="go('ai')">🌿 Anti-inflam.</button>
+</div>
+
+<div id="p-cl" class="pg on">
+  <div class="wscr"><div id="wbtns" class="wbtns"></div></div>
+  <div id="wkhdr"></div>
+  <div id="clsecs"></div>
+  <div id="vbox"></div>
+  <div id="bilanbox"></div>
+  <button class="reset-btn" onclick="resetWk()">Réinitialiser la semaine</button>
+</div>
+
+<div id="p-prog" class="pg">
+  <div class="ph-btns" id="phbtns"></div>
+  <div id="phcont"></div>
+</div>
+
+<div id="p-plan" class="pg">
+  <div class="card" style="margin-bottom:12px"><div style="padding:14px 16px;font-size:13px;color:#555;line-height:1.6">Ta semaine type · <strong>5–6 séances</strong> · Appuie sur un jour.</div></div>
+  <div class="wgrid" id="wgrid"></div>
+  <div id="ddtl" style="display:none"></div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="padding:16px">
+      <div style="font-weight:700;font-size:14px;margin-bottom:12px">⚡ Règles non négociables</div>
+      <div class="li"><span class="li-ic">🕗</span>Collation 16h chaque jour — même les jours de repos.</div>
+      <div class="li"><span class="li-ic">🍽️</span>Post-séance : protéines dans les 30 min. Toujours.</div>
+      <div class="li"><span class="li-ic">🚫</span>Cuisine fermée après 20h30. Tisane, chocolat 85%, et au lit.</div>
+      <div class="li"><span class="li-ic">😴</span>7–8h de sommeil. Le cortisol du manque de sommeil fait stocker les graisses.</div>
+      <div class="li"><span class="li-ic">📊</span>Bilan chaque lundi matin : poids + énergie + humeur.</div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:20px"><div style="padding:16px"><div style="font-weight:700;font-size:14px;margin-bottom:12px">📅 Les 12 semaines</div><div id="tl12"></div></div></div>
+</div>
+
+<div id="p-rep" class="pg-np">
+  <div class="sub-nav" id="repsnav"></div>
+  <div style="padding:14px">
+    <div id="repcont"></div>
+    <div class="card" style="margin-top:4px;margin-bottom:12px">
+      <div style="padding:16px">
+        <div style="font-weight:700;font-size:14px;margin-bottom:10px">🍽️ Journée type selon ton sport</div>
+        <div style="display:flex;gap:6px;margin-bottom:12px" id="jtbtns">
+          <button class="sub-btn on" onclick="setJT('course')" style="flex:1">🏃‍♀️ Course</button>
+          <button class="sub-btn" onclick="setJT('salle')" style="flex:1">🏋️ Salle</button>
+          <button class="sub-btn" onclick="setJT('repos')" style="flex:1">😴 Repos</button>
+        </div>
+        <div id="jtcont"></div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:14px;padding:16px;margin-bottom:8px">
+      <div style="color:#fff;font-weight:700;font-size:14px;margin-bottom:4px">🌿 Protéines végétariennes · ~150g/jour</div>
+      <div style="color:#C8E6C9;font-size:12px;margin-bottom:12px">Varie les sources pour tous les acides aminés essentiels.</div>
+      <div id="protlist"></div>
+    </div>
+  </div>
+</div>
+
+<div id="p-tupp" class="pg">
+  <div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:14px;padding:14px 16px;margin-bottom:12px">
+    <div style="color:#fff;font-weight:700;font-size:16px;margin-bottom:4px">📦 Batch cooking & Tupperware</div>
+    <div style="color:#C8E6C9;font-size:13px"><strong style="color:#fff">Si c\u2019est dans ton frigo, tu ne craques pas.</strong> Préparer le dimanche = manger bien toute la semaine.</div>
+  </div>
+  <div id="tuppcont"></div>
+  <div class="dk">
+    <div style="color:#A8D8A8;font-weight:700;font-size:14px;margin-bottom:12px">📅 Dimanche batch cooking · 60 min chrono</div>
+    <div class="dk-r"><div class="dk-t">0–20 min</div><div class="dk-tx">Four à 200° : légumes en morceaux (courgette, poivron, aubergine, patate douce) avec huile + herbes</div></div>
+    <div class="dk-r"><div class="dk-t">0–25 min</div><div class="dk-tx">Grande casserole : 300g lentilles corail OU 200g lentilles vertes · cuire selon paquet · égoutter</div></div>
+    <div class="dk-r"><div class="dk-t">0–25 min</div><div class="dk-tx">Riz ou quinoa : 300g cru dans cuiseur à riz ou casserole</div></div>
+    <div class="dk-r"><div class="dk-t">15–25 min</div><div class="dk-tx">Poêle : tofu marinés (sauce soja + ail + huile sésame) · 5 min à feu vif</div></div>
+    <div class="dk-r"><div class="dk-t">25–35 min</div><div class="dk-tx">6 oeufs durs · refroidir · bocal au frigo</div></div>
+    <div class="dk-r"><div class="dk-t">40–60 min</div><div class="dk-tx">Sauce tahini en bocal + assembler 2–3 salades jar pour la semaine</div></div>
+  </div>
+</div>
+
+<div id="p-sea" class="pg">
+  <div class="dk" style="margin-bottom:12px"><div style="color:#C4B5A5;font-size:13px;line-height:1.6">Semaine type : <strong style="color:#fff">2× force salle · 2–3× course · 1× HIIT · 1× récup</strong>. Appuie sur une séance.</div></div>
+  <div id="seacont"></div>
+</div>
+
+<div id="p-suc" class="pg">
+  <div style="background:#C62828;border-radius:14px;padding:18px;margin-bottom:12px">
+    <div style="color:#fff;font-weight:700;font-size:19px;margin-bottom:6px">🍬 Briser l\u2019addiction au sucre</div>
+    <div style="color:#FFCDD2;font-size:13px;line-height:1.6">Le sucre agit comme une drogue douce — dopamine, puis creux, puis envie de recommencer. Le cycle se brise en 21 jours.</div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="padding:16px">
+      <div style="font-weight:700;font-size:14px;color:#C62828;margin-bottom:12px">🔄 Ton cycle actuel</div>
+      <div class="cycle-s" style="background:#FFEBEE"><div class="cycle-n" style="background:#C62828">1</div><span style="font-size:13px">Pic de glycémie → énergie · dopamine · bien-être</span></div>
+      <div class="cycle-s" style="background:#FCE4EC"><div class="cycle-n" style="background:#C62828">2</div><span style="font-size:13px">Chute glycémique 30–60 min → fatigue, irritabilité</span></div>
+      <div class="cycle-s" style="background:#F8BBD9"><div class="cycle-n" style="background:#C62828">3</div><span style="font-size:13px">Envie intense de sucre pour compenser la chute</span></div>
+      <div class="cycle-s" style="background:#FFEBEE" style="margin-bottom:0"><div class="cycle-n" style="background:#C62828">4</div><span style="font-size:13px">Tu craques → recommence au point 1 → cercle vicieux</span></div>
+    </div>
+  </div>
+  <div class="card" style="margin-bottom:12px">
+    <div style="padding:16px">
+      <div style="font-weight:700;font-size:14px;color:#1B5E20;margin-bottom:12px">✅ Stabiliser ta glycémie</div>
+      <div class="li"><span class="li-ic">🥚</span><div><strong>Petit-déj protéiné</strong> — Oeufs/skyr/fromage blanc → glycémie stable 4h.</div></div>
+      <div class="li"><span class="li-ic">🥗</span><div><strong>Fibres à chaque repas</strong> — Légumes + légumineuses ralentissent l\u2019absorption.</div></div>
+      <div class="li"><span class="li-ic">⏰</span><div><strong>Collation 16h</strong> — Skyr + noix = satiété jusqu\u2019au dîner. MOMENT CLÉ.</div></div>
+      <div class="li"><span class="li-ic">🚶‍♀️</span><div><strong>Marche 10 min post-repas</strong> — Pic glycémique réduit de 30%.</div></div>
+      <div class="li"><span class="li-ic">😴</span><div><strong>Sommeil 7–8h</strong> — Manque de sommeil augmente les envies de sucre.</div></div>
+    </div>
+  </div>
+  <div class="dk" style="margin-bottom:12px">
+    <div style="color:#7FDBCA;font-weight:700;font-size:14px;margin-bottom:12px">🆘 SOS Fringale — 5 min</div>
+    <div class="dk-r"><div class="dk-t">Boire</div><div class="dk-tx">1 grand verre d\u2019eau + attendre 5 min. Dans 40% des cas l\u2019envie disparaît.</div></div>
+    <div class="dk-r"><div class="dk-t">Bouger</div><div class="dk-tx">20 squats ou marcher 5 min dehors. Change le signal chimique dans le cerveau.</div></div>
+    <div class="dk-r"><div class="dk-t">Mâcher</div><div class="dk-tx">Chewing-gum menthe sans sucre. Trompe le cerveau.</div></div>
+    <div class="dk-r"><div class="dk-t">Tisane</div><div class="dk-tx">Réglisse, cannelle, chicorée → effet sucré naturel, zéro calorie.</div></div>
+    <div class="dk-r"><div class="dk-t">Si reste</div><div class="dk-tx">2 carrés chocolat 85%+ ou 1 datte + 3 amandes. Savouré lentement.</div></div>
+  </div>
+  <div style="background:#FFF8E1;border:1px dashed #E65100;border-radius:14px;padding:16px;margin-bottom:20px">
+    <div style="color:#E65100;font-weight:700;font-size:13px;margin-bottom:10px">✅ Sucre autorisé sans culpabilité</div>
+    <div style="font-size:13px;color:#444;line-height:1.9">
+      🍓 Fruits entiers : 2/jour max · Baies, pomme, poire prioritaires<br>
+      🍫 Chocolat noir 85%+ : 2 carrés/jour · Magnésium + satiété<br>
+      🥭 1 datte + 3 amandes : combo anti-craquage immédiat<br>
+      🍕 1 repas plaisir/semaine : le samedi. Choisi, savouré, sans honte.
+    </div>
+  </div>
+</div>
+
+<div id="p-ai" class="pg">
+  <div style="background:linear-gradient(135deg,#1B5E20,#2E7D32);border-radius:14px;padding:18px;margin-bottom:12px">
+    <div style="color:#fff;font-weight:700;font-size:19px;margin-bottom:6px">🌿 Alimentation Anti-Inflammatoire</div>
+    <div style="color:#C8E6C9;font-size:13px;line-height:1.6">Réduit les courbatures post-course, accélère la récupération musculaire et booste les performances. Tout ce que tu manges peut <strong style="color:#fff">amplifier ou calmer</strong> l\u2019inflammation.</div>
+  </div>
+  <div id="aicont"></div>
+</div>
+
+<script>
+var D = {"phases": [{"num": "01", "title": "Désintox Sucre", "weeks": "Sem. 1–3", "accent": "#C62828", "light": "#FFEBEE", "icon": "🔥", "tagline": "Briser l’addiction au sucre · Stabiliser la glycémie", "poids": "−1 à −1,5 kg", "nutrition": [{"icon": "🚫", "bold": "Supprimer tous les sucres ajoutés", "text": " — pas de biscuits, barres, jus, sodas, miel, sucre dans le café."}, {"icon": "🥚", "bold": "Protéines à CHAQUE repas", "text": " — oeufs, tofu, fromage blanc, skyr, légumineuses."}, {"icon": "📉", "bold": "Glucides uniquement autour du sport", "text": " — avoine le matin si entraînement, sinon protéines + légumes."}, {"icon": "🥗", "bold": "Légumes à volonté", "text": " — ils occupent l’estomac et coupent les fringales."}, {"icon": "💧", "bold": "3 L d’eau par jour", "text": " — souvent la faim est de la déshydratation."}, {"icon": "⏰", "bold": "3 repas fixes + collation 16h", "text": " — pas de nourriture hors de ces 4 créneaux."}], "sport": [{"icon": "🏃‍♀️", "text": "Maintenir tes sorties course — elles sont tes alliées n°1 pour le déficit"}, {"icon": "🏋️", "text": "Salle : priorité aux exercices composés (squat, deadlift, rowing, développé couché)"}, {"icon": "🎯", "text": "Objectif : 5 séances/sem. avec au moins 2 courses et 2 séances de force"}, {"icon": "😴", "text": "1 jour de repos TOTAL obligatoire — la récupération = la perte de gras"}], "sucre": {"title": "🍬 Stratégie désintox semaine 1–3", "items": ["Jour 1–4 : tu vas avoir des maux de tête et des envies intenses. C’est normal. Ça passe.", "Substituts autorisés : fruits entiers (1–2/jour max), chocolat 85%+ (2 carrés), dattes (1–2 max)", "Dès que l’envie arrive : boire 1 grand verre d’eau + mâcher un chewing-gum sans sucre", "Identifier le déclencheur : ennui ? stress ? fatigue ? habitude ? — noter dans ton téléphone"]}}, {"num": "02", "title": "Machine à Brûler", "weeks": "Sem. 4–7", "accent": "#E65100", "light": "#FFF3E0", "icon": "⚡", "tagline": "Amplifier la perte de gras · Optimiser les performances", "poids": "−2,5 à −3 kg", "nutrition": [{"icon": "📊", "bold": "Déficit optimisé −450 kcal", "text": " — manger plus le matin et le midi, dîner léger avant 20h."}, {"icon": "💪", "bold": "Protéines : 2 g/kg soit ~150 g/jour", "text": " — tofu, tempeh, seitan, légumineuses, skyr, oeufs, fromage."}, {"icon": "🌾", "bold": "Glucides cyclés", "text": " — plus les jours de longue sortie, moins les jours de repos."}, {"icon": "🫙", "bold": "Batch cooking dimanche", "text": " — prépare 2 protéines, 2 féculents, 3 légumes."}, {"icon": "🍕", "bold": "1 repas plaisir/semaine", "text": " — le samedi soir. Choisi, savouré, sans culpabilité."}, {"icon": "☕", "bold": "Caféine stratégique", "text": " — café ou thé vert 30 min avant le sport."}], "sport": [{"icon": "🏃‍♀️", "text": "Augmenter progressivement le volume course (+10%/semaine max)"}, {"icon": "⚡", "text": "Introduire 1 séance HIIT/semaine : 20 min suffisent, effet afterburn 24h"}, {"icon": "🏋️", "text": "Salle : augmenter les charges progressivement"}, {"icon": "🚶‍♀️", "text": "Marche 10 min après chaque repas principal — réduit la glycémie de 30%"}], "sucre": {"title": "🍬 Gérer les envies en phase 2", "items": ["Le plus dur est passé — ton palais s’est recalibré, le sucre naturel des fruits suffit", "Collation 16h : skyr + 1 poignée noix + quelques framboises → satiété 3h garantie", "Post-sport : smoothie maison (lait végétal + banane + protéine végétale)", "Si craquage : noter l’heure, l’humeur, ce qui l’a déclenché. Pas de honte, juste de la data."]}}, {"num": "03", "title": "Affinage Final", "weeks": "Sem. 8–12", "accent": "#1B5E20", "light": "#E8F5E9", "icon": "🏆", "tagline": "Atteindre 69 kg · Ancrer les habitudes à vie", "poids": "−3 à −4 kg", "nutrition": [{"icon": "🔄", "bold": "Réduire le déficit à −250 kcal", "text": " — ton corps s’adapte, la perte continue plus doucement."}, {"icon": "🧠", "bold": "Manger en pleine conscience", "text": " — sans écran. Poser la fourchette entre chaque bouchée."}, {"icon": "📈", "bold": "Augmenter les glucides si performances baissent", "text": " — la perf ne doit pas souffrir."}, {"icon": "🌿", "bold": "Varier les protéines végétales", "text": " — seitan, edamame, graines de chanvre, spiruline."}, {"icon": "🍫", "bold": "Sucre intégré avec intention", "text": " — 1–2 desserts/semaine, choisis et dégustés lentement."}, {"icon": "📏", "bold": "Mesures mensuelles", "text": " — tour de taille, de hanches, de cuisses. Le miroir > la balance."}], "sport": [{"icon": "🏃‍♀️", "text": "Si tu prépares un objectif course : priorité à la planification de ta saison"}, {"icon": "💪", "text": "Maintenir la force : 2 séances salle/semaine minimum"}, {"icon": "📊", "text": "Bilan hebdo : poids + énergie (1-10) + humeur + qualité du sommeil"}, {"icon": "🎯", "text": "Objectif maintenance : apprendre à manger à ton nouveau poids"}], "sucre": {"title": "🍬 Vivre sans addiction au sucre", "items": ["À ce stade, tu n’es plus accro — tu choisis. C’est une différence énorme.", "Rituel du soir : tisane + 2 carrés choco 85% → signal de fin de journée", "Stress intense = risque de rechute : avoir toujours du skyr et des fruits dans le frigo", "Célèbre chaque semaine réussie — pas avec de la nourriture, mais avec quelque chose qui te fait du bien."]}}], "weekDays": [{"day": "Lun", "icon": "🏋️", "label": "Salle Force", "color": "#E3F2FD", "acc": "#1565C0", "detail": "Full body ou haut du corps · 4 exercices composés · 4×8–12 reps · Finir par 15 min cardio léger"}, {"day": "Mar", "icon": "🏃‍♀️", "label": "Course Z2", "color": "#FFF8E1", "acc": "#E65100", "detail": "Sortie 40–60 min allure Z2 · A jeun ou après café uniquement · Petit-déj protéiné après"}, {"day": "Mer", "icon": "⚡", "label": "HIIT/Salle", "color": "#FCE4EC", "acc": "#C62828", "detail": "Option A : HIIT 20–25 min (10×30s sprint / 30s récup) · Option B : Salle bas du corps"}, {"day": "Jeu", "icon": "🏃‍♀️", "label": "Fractions", "color": "#FFF8E1", "acc": "#E65100", "detail": "Séance qualité : 5–6×1000m à allure semi · Échauffement 15 min obligatoire"}, {"day": "Ven", "icon": "🏋️", "label": "Salle Force", "color": "#E3F2FD", "acc": "#1565C0", "detail": "Bas du corps · Squat, deadlift, hip thrust, step-up · 4×10 reps · Core en finisher"}, {"day": "Sam", "icon": "🏃‍♀️", "label": "Sortie longue", "color": "#FFF8E1", "acc": "#E65100", "detail": "Sortie longue 75–120 min allure confortable · LA séance brûle-graisses de la semaine"}, {"day": "Dim", "icon": "😴", "label": "Repos+Batch", "color": "#F5F5F5", "acc": "#757575", "detail": "Repos complet ou balade 30 min · Batch cooking : préparer protéines + féculents + légumes"}], "repasData": {"petitdej": {"label": "Petit-déj", "icon": "🌅", "color": "#FFF8E1", "accent": "#F57F17", "items": [{"name": "Bowl avoine power", "tags": ["pré-course", "facile"], "time": "5 min", "cal": "~420 kcal", "prot": "22g", "ingr": "60g flocons d’avoine · 200ml lait végétal · 1 c.à.s. graines de chanvre · 1 c.à.s. beurre d’amande · ½ banane · cannelle", "prep": "Chauffer l’avoine avec le lait. Ajouter chanvre + beurre d’amande + banane en rondelles + cannelle."}, {"name": "Oeufs brouillés & pain de seigle", "tags": ["post-course", "protéiné"], "time": "8 min", "cal": "~380 kcal", "prot": "28g", "ingr": "3 oeufs · 1 tranche pain de seigle · 100g fromage blanc · herbes fraîches · sel poivre", "prep": "Brouiller les oeufs à feu doux avec herbes. Tartiner le fromage blanc sur le pain grillé."}, {"name": "Pancakes fromage blanc", "tags": ["dimanche", "plaisir"], "time": "15 min", "cal": "~450 kcal", "prot": "30g", "ingr": "100g fromage blanc 0% · 2 oeufs · 40g farine avoine · ½ c.à.c. levure · fruits rouges", "prep": "Mixer tous les ingrédients. Cuire 2 min/face à feu moyen. Servir avec fruits rouges."}, {"name": "Skyr & granola maison", "tags": ["rapide", "batch"], "time": "3 min", "cal": "~350 kcal", "prot": "24g", "ingr": "200g skyr nature · 30g granola · 1 poignée myrtilles · 1 c.à.c. graines de chia", "prep": "Assembler dans un bol. Granola batch dimanche : 200g flocons + 50g noix + huile de coco + cannelle, four 20 min à 160°."}, {"name": "Overnight oats", "tags": ["tupp", "à emporter"], "time": "5 min (veille)", "cal": "~400 kcal", "prot": "22g", "ingr": "60g flocons d’avoine · 200ml lait végétal · 150g skyr · 1 c.à.s. graines de chia · 1 c.à.s. beurre d’amande", "prep": "Mélanger tout dans un bocal le soir. Les graines de chia absorbent la nuit. Ajouter ½ banane le matin."}]}, "dejeuner": {"label": "Déjeuner", "icon": "☀️", "color": "#E8F5E9", "accent": "#2E7D32", "items": [{"name": "Buddha bowl lentilles corail", "tags": ["batch", "tupp"], "time": "20 min", "cal": "~520 kcal", "prot": "26g", "ingr": "150g lentilles corail · 150g riz brun · épinards · ½ avocat · 100g edamame · tahini + citron + ail", "prep": "Cuire lentilles 10 min, riz brun 25 min. Sauce tahini : 2 c.à.s. tahini + jus ½ citron + ail + eau. Assembler."}, {"name": "Curry pois chiches patate douce", "tags": ["batch", "tupp", "réconfort"], "time": "25 min", "cal": "~550 kcal", "prot": "22g", "ingr": "400g pois chiches · 1 patate douce · 200ml lait de coco light · curry + cumin + gingembre · épinards · riz basmati", "prep": "Faire revenir oignon + épices. Ajouter patate douce + pois chiches + lait de coco. Mijoter 15 min. Épinards en fin."}, {"name": "Salade jar niçoise végé", "tags": ["tupp", "léger"], "time": "10 min", "cal": "~420 kcal", "prot": "24g", "ingr": "3 oeufs durs · haricots verts · tomates cerises · olives · 80g quinoa · vinaigrette moutarde", "prep": "Sauce au fond du jar, puis pois chiches, légumes, quinoa, oeufs, verdure. Retourner au moment de manger."}, {"name": "Wrap tofu mariné & légumes", "tags": ["tupp", "rapide"], "time": "15 min", "cal": "~480 kcal", "prot": "28g", "ingr": "150g tofu ferme · 1 tortilla blé complet · ½ poivron · ¼ avocat · houmous · roquette · sauce soja + ail", "prep": "Mariner tofu 30 min (sauce soja + ail + paprika). Poêler 5 min. Assembler wrap."}, {"name": "Bowl poke tempeh & mangue", "tags": ["été", "tupp"], "time": "20 min", "cal": "~500 kcal", "prot": "30g", "ingr": "150g tempeh · 150g riz sushi · ½ mangue · concombre · edamame · sauce teriyaki · graines sésame", "prep": "Couper tempeh en cubes, poêler avec teriyaki. Assembler avec riz + fruits + légumes."}, {"name": "Soupe lentilles thermos", "tags": ["hiver", "tupp", "batch"], "time": "30 min", "cal": "~450 kcal", "prot": "24g", "ingr": "200g lentilles vertes · 2 carottes · 1 oignon · céleri · bouillon légumes · cumin · 2 tranches pain seigle", "prep": "Faire revenir oignon + légumes 5 min. Lentilles + bouillon. Cuire 25 min. Mixer partiellement."}]}, "diner": {"label": "Dîner", "icon": "🌙", "color": "#EDE7F6", "accent": "#4527A0", "items": [{"name": "Tofu laqué & wok légumes", "tags": ["rapide", "léger"], "time": "20 min", "cal": "~420 kcal", "prot": "30g", "ingr": "200g tofu ferme · courgette · poivron · brocoli · sauce hoisin · gingembre · riz de chou-fleur", "prep": "Presser le tofu, couper en cubes. Poêler à feu vif avec sauce hoisin + gingembre. Wok légumes 5 min."}, {"name": "Galettes lentilles & chèvre", "tags": ["original", "batch"], "time": "30 min", "cal": "~460 kcal", "prot": "26g", "ingr": "200g lentilles cuites · 1 oeuf · 30g farine avoine · 50g chèvre · herbes · salade verte", "prep": "Écraser lentilles grossièrement. Mélanger avec oeuf + farine + herbes. Galettes 4 min/face."}, {"name": "Dahl lentilles corail", "tags": ["réconfort", "batch", "tupp"], "time": "25 min", "cal": "~480 kcal", "prot": "24g", "ingr": "200g lentilles corail · 400ml lait de coco light · tomates concassées · oignon · curry + curcuma + cumin · coriandre", "prep": "Revenir épices + oignon. Lentilles + tomates + lait de coco. Cuire 20 min. Se congèle très bien."}, {"name": "Omelette champignons & feta", "tags": ["ultra-rapide", "léger"], "time": "10 min", "cal": "~340 kcal", "prot": "28g", "ingr": "3 oeufs · 100g champignons · 40g feta · épinards · ciboulette · salade verte", "prep": "Poêler champignons. Battre oeufs. Cuire en omelette, ajouter champignons + feta + épinards frais. Plier."}, {"name": "Seitan poêlé & purée patate douce", "tags": ["protéiné", "post-salle"], "time": "25 min", "cal": "~520 kcal", "prot": "38g", "ingr": "150g seitan · 300g patate douce · 200g haricots verts · sauce soja + miel + ail", "prep": "Cuire patate douce vapeur 20 min, mixer avec noix muscade. Poêler seitan avec sauce soja + miel + ail."}, {"name": "Soupe miso tofu & soba", "tags": ["léger", "rapide"], "time": "15 min", "cal": "~360 kcal", "prot": "24g", "ingr": "1L bouillon dashi végétal · 2 c.à.s. miso blanc · 100g tofu soyeux · 80g nouilles soba · algues wakamé", "prep": "Chauffer bouillon. Dissoudre le miso HORS du feu. Ajouter nouilles + tofu + algues."}]}, "collation": {"label": "Collations 16h", "icon": "⏰", "color": "#FCE4EC", "accent": "#C62828", "items": [{"name": "Skyr & noix & baies", "tags": ["parfait", "anti-fringale"], "time": "2 min", "cal": "~220 kcal", "prot": "18g", "ingr": "150g skyr · 1 poignée noix mélangées · 1 poignée framboises ou myrtilles", "prep": "Assembler. Protéines + graisses + fibres = satiété 3h. Le must absolu."}, {"name": "Houmous & crudités", "tags": ["batch", "tupp"], "time": "5 min", "cal": "~200 kcal", "prot": "8g", "ingr": "80g houmous · carottes · concombre · céleri · poivron", "prep": "Batch houmous : 400g pois chiches + tahini + citron + ail + eau froide. Mixer. 5 jours au frigo."}, {"name": "Datte + amandes + choco 85%", "tags": ["anti-sucre", "plaisir"], "time": "1 min", "cal": "~190 kcal", "prot": "5g", "ingr": "2 dattes Medjool · 5 amandes · 2 carrés chocolat 85%+", "prep": "Le combo contre l’envie de sucre. Sucre naturel + protéine + graisse = satiété immédiate."}, {"name": "Smoothie récup post-sport", "tags": ["post-course", "post-salle"], "time": "3 min", "cal": "~320 kcal", "prot": "25g", "ingr": "200ml lait végétal · ½ banane · 25g protéine végétale vanille · 1 c.à.c. beurre amande · glaçons", "prep": "Mixer 30 secondes. Boire dans les 20 min post-séance."}]}}, "tupps": [{"name": "Le Bowl Semaine", "cat": "Batch cooking", "emoji": "🏆", "color": "#E8F5E9", "accent": "#1B5E20", "prep": "Dimanche · ~45 min pour 5 jours", "cons": "4–5 jours au frigo", "macro": "~500 kcal · 28g prot.", "desc": "La base : prépare en grand volume et assemble différemment chaque jour.", "base": ["200g lentilles vertes cuites (ou pois chiches)", "300g riz brun ou quinoa cuit", "500g légumes rôtis au four (courgette, poivron, aubergine)", "150g tofu mariné et poêlé", "Sauce tahini en bocal (se conserve 1 semaine)"], "tips": "Lundi = bowl chaud · Mardi = salade froide · Mercredi = wrap · Jeudi = soupe + bouillon · Vendredi = reste + oeuf poché"}, {"name": "Curry Batch", "cat": "Plat chaud", "emoji": "🍛", "color": "#FFF3E0", "accent": "#E65100", "prep": "30 min · pour 4 portions", "cons": "4 jours frigo · 3 mois congélo", "macro": "~550 kcal · 22g prot.", "desc": "Le meilleur ami du batch végétarien — se réchauffe encore mieux le lendemain.", "base": ["2 boites pois chiches (ou lentilles corail)", "1 grosse patate douce en cubes", "400ml lait de coco light", "200ml coulis de tomate", "Curry + cumin + gingembre + curcuma", "100g épinards frais (ajouter en réchauffant)"], "tips": "Congeler en portions individuelles dans des sacs plats. Décongeler la veille au frigo."}, {"name": "Salade Jar", "cat": "Tupp travail", "emoji": "🫙", "color": "#E3F2FD", "accent": "#1565C0", "prep": "10 min la veille · 1 portion", "cons": "2 jours au frigo", "macro": "~420 kcal · 24g prot.", "desc": "Technique jar : sauce au fond, ingrédients lourds, légers, verdure. Retourner pour manger.", "base": ["Fond : 2 c.à.s. vinaigrette ou tahini dilué", "Etage 1 : pois chiches ou edamame", "Etage 2 : tomates cerises + concombre + poivron", "Etage 3 : quinoa ou riz brun froid", "Etage 4 : 2 oeufs durs ou 80g tofu froid", "Top : roquette ou mâche + graines de tournesol"], "tips": "La sauce ne touche pas la verdure avant de retourner le jar. Reste croquant toute la journée."}, {"name": "Galettes Protéinées", "cat": "Snack / Entrée", "emoji": "🫓", "color": "#F3E5F5", "accent": "#6A1B9A", "prep": "30 min · pour 8 galettes", "cons": "4 jours frigo · congélables", "macro": "2 galettes : ~280 kcal · 18g prot.", "desc": "Polyvalentes : en repas avec salade, en snack, chaudes ou froides.", "base": ["200g lentilles vertes cuites (bien égouttées)", "1 oeuf entier", "40g farine d’avoine", "½ oignon émincé poêlé", "Cumin + coriandre + sel + poivre", "Option : 50g fromage de chèvre émietté"], "tips": "Écraser les lentilles grossièrement — garder de la texture. Poêler feu moyen."}, {"name": "Soupe Thermos", "cat": "Tupp travail hiver", "emoji": "🍵", "color": "#E8EAF6", "accent": "#283593", "prep": "30 min · pour 4 portions", "cons": "5 jours frigo · thermos bureau", "macro": "~350 kcal · 20g prot.", "desc": "La soupe épaisse = rassasiante. Évite le repas de cantine raté.", "base": ["300g lentilles corail", "2 carottes + 1 oignon + 2 branches céleri", "1L bouillon légumes", "Cumin + curcuma + paprika fumé", "1 boite tomates concassées", "1 c.à.s. jus citron + coriandre fraîche"], "tips": "Mixer partiellement pour texture crémeuse. Thermos + 2 tranches pain seigle = repas complet."}, {"name": "Overnight Oats", "cat": "Petit-déj à emporter", "emoji": "🌙", "color": "#FFF8E1", "accent": "#F57F17", "prep": "5 min la veille", "cons": "2 jours au frigo", "macro": "~400 kcal · 22g prot.", "desc": "Préparer le soir, manger le lendemain matin au bureau ou post-course.", "base": ["60g flocons d’avoine", "200ml lait végétal", "150g skyr nature", "1 c.à.s. graines de chia", "1 c.à.s. beurre d’amande", "Matin : ½ banane + myrtilles"], "tips": "Préparer 2–3 jours d’un coup dans des bocaux mason jar. Ajouter les fruits frais le matin."}], "seances": [{"name": "Force · Haut du corps", "cat": "Salle", "emoji": "💪", "duree": "55–65 min", "niveau": "Toutes phases", "acc": "#1565C0", "light": "#E3F2FD", "obj": "Construire et maintenir la masse musculaire du haut pour la posture de coureuse", "echauff": ["5 min vélo ou rameur · intensité légère", "Rotation épaules + cercles bras · 2×10", "Pompes genoux · 2×10", "Band pull-apart · 2×15"], "blocs": [{"nom": "A — Tirage", "exos": [{"ex": "Tirage poitrine (lat pulldown)", "sets": "4×10", "charge": "Difficile sur les 3 dernières reps", "note": "Dos droit, coudes vers les hanches"}, {"ex": "Tirage horizontal poulie basse", "sets": "3×12", "charge": "Modérée", "note": "Coudes contre le corps, serrer les omoplates"}]}, {"nom": "B — Push", "exos": [{"ex": "Développé couché haltères", "sets": "4×10", "charge": "Progressive", "note": "Coudes à 45°. Descendre lentement (3s)"}, {"ex": "Élévations latérales haltères", "sets": "3×15", "charge": "Légère", "note": "Pouces vers le bas, pas plus haut que les épaules"}]}, {"nom": "C — Bras & Core", "exos": [{"ex": "Curl biceps haltères alterné", "sets": "3×12", "charge": "Modérée", "note": "Supination du poignet en montant"}, {"ex": "Triceps corde poulie haute", "sets": "3×12", "charge": "Modérée", "note": "Coudes fixes, extension complète"}, {"ex": "Planche", "sets": "3×45 sec", "charge": "Poids de corps", "note": "Bassin neutre, respiration continue"}]}], "finisher": "10 min cardio léger (vélo ou tapis à Z2)", "conseils": ["Repos 60–90 sec entre séries · 2 min entre blocs", "Post-séance : 25–30g protéines dans les 30 min", "Si fatigue de la course : réduire les charges de 20%"]}, {"name": "Force · Bas du corps", "cat": "Salle", "emoji": "🦵", "duree": "60–70 min", "niveau": "Toutes phases", "acc": "#2E7D32", "light": "#E8F5E9", "obj": "Renforcer les muscles propulseurs de la course et prévenir les blessures", "echauff": ["5 min tapis à allure marche rapide", "Fentes marchées · 2×10 chaque jambe", "Ponts fessiers · 2×15", "Squat profond poids du corps · 2×15"], "blocs": [{"nom": "A — Compound lourd", "exos": [{"ex": "Squat barre ou goblet squat", "sets": "4×8", "charge": "Lourd · difficile sur les 2 dernières reps", "note": "Genoux dans l’axe des pieds, descendre sous le parallèle"}, {"ex": "Romanian Deadlift haltères", "sets": "4×10", "charge": "Modéré-lourd", "note": "Dos plat, hanches en arrière, descendre jusqu’au tibia"}]}, {"nom": "B — Fessiers", "exos": [{"ex": "Hip Thrust (banc + barre ou haltère)", "sets": "4×12", "charge": "Lourd", "note": "L’exercice roi des fessiers. Extension complète, contraction 1 sec en haut"}, {"ex": "Fentes bulgares (pied arrière surélevé)", "sets": "3×10 chaque", "charge": "Modérée", "note": "Genou avant ne dépasse pas le pied, descendre lentement"}]}, {"nom": "C — Isolation & Gainage", "exos": [{"ex": "Leg curl allongé", "sets": "3×15", "charge": "Légère-modérée", "note": "Ischio-jambiers · courbatures normales après"}, {"ex": "Abducteur machine ou lateral walk élastique", "sets": "3×20", "charge": "Légère", "note": "Stabilité du genou en course"}, {"ex": "Soulevé de terre une jambe", "sets": "3×12 chaque", "charge": "Poids du corps ou haltère léger", "note": "Équilibre + stabilité cheville = prévention blessures"}]}], "finisher": "5 min étirements fessiers + psoas — essentiel pour les coureuses", "conseils": ["Programmer minimum 48h avant une course qualité", "Post-séance : glucides + protéines (patate douce + tofu ou 3 oeufs + riz)", "Courbatures fessiers après hip thrust = normal et signe que ça a fonctionné"]}, {"name": "Course · Sortie Z2", "cat": "Course", "emoji": "🏃‍♀️", "duree": "40–70 min", "niveau": "Toutes phases", "acc": "#E65100", "light": "#FFF8E1", "obj": "Zone 2 = zone brûle-graisses. FC 120–145 bpm. Tu peux tenir une conversation mais pas chanter.", "echauff": ["5 min marche rapide", "Montées de genoux · 30 sec", "Talons-fesses · 30 sec", "Foulées progressives · 4×50m"], "blocs": [{"nom": "A jeun si moins de 60 min", "exos": [{"ex": "Courir à allure conversationnelle", "sets": "40–70 min continus", "charge": "FC 120–145 bpm", "note": "Phrases entières possibles = bonne allure. Tu haletés = ralentis."}]}, {"nom": "Si plus de 60 min", "exos": [{"ex": "1 banane ou 1 datte avant le départ", "sets": "", "charge": "", "note": "Pour éviter les fringales post-course"}]}], "finisher": "5 min retour au calme en marchant + étirements mollets + ischio", "conseils": ["Post-course : petit-déj protéiné dans les 20 min", "Regarder la fréquence cardiaque, pas la vitesse", "C’est LA séance la plus importante pour la perte de gras sur le long terme"]}, {"name": "Course · Fractions (VMA)", "cat": "Course", "emoji": "⚡", "duree": "55–65 min total", "niveau": "Phase 2 et 3", "acc": "#C62828", "light": "#FCE4EC", "obj": "Améliorer la VO2max et la vitesse. Effet afterburn 24h. 1 séance/semaine maximum.", "echauff": ["15 min footing très léger — essentiel", "6×100m accélérations progressives", "Étirements dynamiques jambes"], "blocs": [{"nom": "Option A — 1000m", "exos": [{"ex": "5–6 × 1000m à allure 10km", "sets": "5–6 répétitions", "charge": "Effort perçu 8/10", "note": "Récup : 2–3 min marche/footing entre chaque"}]}, {"nom": "Option B — Pyramide", "exos": [{"ex": "400m · 600m · 800m · 600m · 400m", "sets": "5 répétitions", "charge": "Effort 8/10", "note": "Récup 90 sec entre chaque"}]}, {"nom": "Option C — Fartlek", "exos": [{"ex": "Accélérations de lampadaire en lampadaire", "sets": "30 min de jeu", "charge": "Variable 6–9/10", "note": "Liberté totale, footing entre les accélérations"}]}], "finisher": "10 min footing très lent + étirements complets 10 min", "conseils": ["Glucides complexes la VEILLE (riz, patate douce, pâtes complètes)", "Ne JAMAIS faire cette séance à jeun", "Si blessure ou fatigue : remplacer par une Z2 de 45 min"]}, {"name": "HIIT · Brûle-graisses", "cat": "Salle/Maison", "emoji": "🔥", "duree": "25–35 min", "niveau": "Phase 2 et 3", "acc": "#E65100", "light": "#FFF3E0", "obj": "Maximiser la dépense en peu de temps. Effet afterburn jusqu’à 24h. 1–2 fois/semaine max.", "echauff": ["3 min jumping jacks + bras", "Squat sauté ×10 · Burpee ×5 · Mountain climbers ×20"], "blocs": [{"nom": "Circuit 1 — Cardio (4 tours)", "exos": [{"ex": "Burpees", "sets": "30s ON · 15s OFF", "charge": "Effort maximal", "note": "Qualité > vitesse. Descente contrôlée, saut explosif."}, {"ex": "Mountain climbers", "sets": "30s ON · 15s OFF", "charge": "Vite mais contrôlé", "note": "Gainage actif, hanches basses"}, {"ex": "Jumping squats", "sets": "30s ON · 15s OFF", "charge": "Explosif", "note": "Réception silencieuse sur la pointe des pieds"}, {"ex": "High knees", "sets": "30s ON · 15s OFF", "charge": "Maximal", "note": "Bras actifs comme en course"}]}, {"nom": "Circuit 2 — Force-cardio (3 tours)", "exos": [{"ex": "Fentes sautées alternées", "sets": "40s ON · 20s OFF", "charge": "Explosif", "note": "Travaille adducteurs et stabilisateurs — essentiel pour coureuse"}, {"ex": "Pompes (ou inclinées)", "sets": "40s ON · 20s OFF", "charge": "Continu", "note": "Rester gainée. Si fatigue : passer aux genoux."}, {"ex": "Hip thrust au sol dynamique", "sets": "40s ON · 20s OFF", "charge": "Contraction fessiers", "note": "Pousser le bassin fort vers le haut, 1 sec en haut"}]}], "finisher": "5 min étirements au sol : fessiers, ischio, quadriceps, mollets", "conseils": ["Ne jamais faire HIIT le lendemain de fractions", "Hydratation +++ pendant et après", "Si tu n’as que 20 min : Circuit 1 seulement, ça suffit"]}, {"name": "Récupération active", "cat": "Récup", "emoji": "🧘‍♀️", "duree": "30–45 min", "niveau": "1 fois/semaine", "acc": "#6A1B9A", "light": "#F3E5F5", "obj": "Favoriser la récupération musculaire, prévenir les blessures de coureuse et réduire les courbatures.", "echauff": [], "blocs": [{"nom": "Option A — Yoga flow coureuse", "exos": [{"ex": "Salutation au soleil", "sets": "5 cycles lents", "charge": "Poids du corps", "note": "Relier le mouvement à la respiration"}, {"ex": "Pigeon yoga (ouverture hanches)", "sets": "2 min chaque côté", "charge": "Doux", "note": "Prévention tendinite et douleur dos"}, {"ex": "Chien tête en bas · cobra · enfant", "sets": "Enchaînement 10 min", "charge": "Relâché", "note": "Cibler ischio-jambiers et mollets"}]}, {"nom": "Option B — Mobilité ciblée", "exos": [{"ex": "Foam roller ischio + mollets", "sets": "2 min chaque", "charge": "Poids du corps", "note": "Rouler lentement, s’arrêter sur les zones sensibles"}, {"ex": "Fente basse + rotation thoracique", "sets": "10 chaque côté", "charge": "Poids du corps", "note": "Ouverture hanche + mobilité du dos"}, {"ex": "Pont fessier lent + respiration", "sets": "3×15 lents", "charge": "Poids du corps", "note": "Activation fessiers en douceur"}]}, {"nom": "Option C — Vélo facile", "exos": [{"ex": "30–45 min vélo à très faible intensité", "sets": "Continu", "charge": "FC moins de 110 bpm", "note": "Sang circule, muscles récupèrent, jambes tournent sans choc"}]}], "finisher": "10 min au sol : étirements longs, respirations profondes", "conseils": ["Cette séance est aussi importante que les intenses — elle permet de PROGRESSER", "Si tu la sautes, les blessures arrivent dans 4–6 semaines", "C’est le jour idéal pour le batch cooking"]}]};
+
+var ck = JSON.parse(localStorage.getItem("pgck") || "{}");
+var bl = JSON.parse(localStorage.getItem("pgbl") || "{}");
+var exp = {};
+var curPh = 0;
+var curWk = 0;
+var curRep = "petitdej";
+var curJT = "course";
+var selDay = null;
+
+function svCk(){ localStorage.setItem("pgck", JSON.stringify(ck)); }
+function svBl(){ localStorage.setItem("pgbl", JSON.stringify(bl)); }
+
+function go(id) {
+  document.querySelectorAll(".pg,.pg-np").forEach(function(p){ p.classList.remove("on"); });
+  document.querySelectorAll(".tab").forEach(function(b){
+    b.classList.remove("on");
+    if(b.getAttribute("onclick").indexOf("'" + id + "'") > -1) b.classList.add("on");
+  });
+  var el = document.getElementById("p-" + id);
+  if(el) el.classList.add("on");
+  if(id === "prog") renderPh(curPh);
+  if(id === "plan") renderPlan();
+  if(id === "rep") { renderRep(); renderJT(); renderProts(); }
+  if(id === "tupp") renderTupps();
+  if(id === "sea") renderSea();
+  if(id === "ai") renderAI();
+}
+
+// ── WEEK DATA ──────────────────────────────────────────────────────────────
+function getWk(wi) {
+  var pi = wi < 3 ? 0 : wi < 7 ? 1 : 2;
+  var p = D.phases[pi];
+  var s = new Date("2026-06-01");
+  s.setDate(s.getDate() + wi * 7);
+  var e = new Date(s); e.setDate(e.getDate() + 6);
+  var fmt = function(d){ return d.getDate() + "/" + (d.getMonth()+1); };
+  var merLabel = wi < 3 ? "Salle \u00b7 Force bas du corps" : "HIIT \u00b7 25 min br\u00fble-graisses";
+  var samLabel = "Sortie longue \u00b7 " + (wi<3?"60\u201375":wi<7?"75\u201390":"90\u2013120") + " min";
+  var r7 = wi<3 ? "Z\u00c9RO sucre ajout\u00e9 toute la semaine" : wi<7 ? "1 repas plaisir max (samedi soir)" : "Sucre intentionnel : 1\u20132 desserts choisis";
+  var g5 = wi < 3 ? "Fringales : d\u00e9clencheur identifi\u00e9 et not\u00e9" : "Fringales g\u00e9r\u00e9es sans craquage sucr\u00e9";
+  return {
+    wi: wi, label: "Sem. " + (wi+1) + " \u00b7 " + fmt(s) + "\u2013" + fmt(e),
+    phase: p.title, acc: p.accent, light: p.light,
+    sport: [
+      {id:"w"+wi+"-lun", day:"Lun", label:"Salle \u00b7 Force haut du corps"},
+      {id:"w"+wi+"-mar", day:"Mar", label:"Course Z2 \u00b7 40\u201360 min"},
+      {id:"w"+wi+"-mer", day:"Mer", label:merLabel},
+      {id:"w"+wi+"-jeu", day:"Jeu", label:"Course \u00b7 Fractions / VMA"},
+      {id:"w"+wi+"-ven", day:"Ven", label:"Salle \u00b7 Force bas du corps"},
+      {id:"w"+wi+"-sam", day:"Sam", label:samLabel},
+      {id:"w"+wi+"-dim", day:"Dim", label:"Repos total + Batch cooking"},
+    ],
+    repas: [
+      {id:"w"+wi+"-r1", label:"Petit-d\u00e9j prot\u00e9in\u00e9 chaque matin (sans sucre ajout\u00e9)"},
+      {id:"w"+wi+"-r2", label:"Collation 16h pr\u00e9par\u00e9e (skyr + noix ou \u00e9quivalent)"},
+      {id:"w"+wi+"-r3", label:"Prot\u00e9ines \u00e0 chaque repas"},
+      {id:"w"+wi+"-r4", label:"L\u00e9gumes \u00e0 chaque repas"},
+      {id:"w"+wi+"-r5", label:"Cuisine ferm\u00e9e apr\u00e8s 20h30"},
+      {id:"w"+wi+"-r6", label:"3 L d\u2019eau par jour respect\u00e9s"},
+      {id:"w"+wi+"-r7", label:r7},
+    ],
+    batch: [
+      {id:"w"+wi+"-b1", label:"L\u00e9gumes r\u00f4tis au four (courgette, poivron, aubergine)"},
+      {id:"w"+wi+"-b2", label:"Lentilles ou pois chiches cuits en grande quantit\u00e9"},
+      {id:"w"+wi+"-b3", label:"Riz brun ou quinoa cuit"},
+      {id:"w"+wi+"-b4", label:"Tofu marin\u00e9 et po\u00ebl\u00e9"},
+      {id:"w"+wi+"-b5", label:"6 oeufs durs en bocal au frigo"},
+      {id:"w"+wi+"-b6", label:"Sauce tahini pr\u00e9par\u00e9e en bocal"},
+      {id:"w"+wi+"-b7", label:"2\u20133 salades jar assembl\u00e9es pour la semaine"},
+    ],
+    plats: [
+      {id:"w"+wi+"-p1", label:"Bowl avoine power"},
+      {id:"w"+wi+"-p2", label:"Oeufs brouill\u00e9s & pain de seigle"},
+      {id:"w"+wi+"-p3", label:"Buddha bowl lentilles corail"},
+      {id:"w"+wi+"-p4", label:"Curry pois chiches patate douce"},
+      {id:"w"+wi+"-p5", label:"Salade jar ni\u00e7oise v\u00e9g\u00e9"},
+      {id:"w"+wi+"-p6", label:"Tofu laqu\u00e9 & wok l\u00e9gumes"},
+      {id:"w"+wi+"-p7", label:"Dahl lentilles corail"},
+      {id:"w"+wi+"-p8", label:"Smoothie r\u00e9cup post-sport"},
+    ],
+    regles: [
+      {id:"w"+wi+"-g1", label:"Bilan lundi matin : poids not\u00e9"},
+      {id:"w"+wi+"-g2", label:"\u00c9nergie de la semaine not\u00e9e (1\u201310)"},
+      {id:"w"+wi+"-g3", label:"Sommeil 7\u20138h respect\u00e9 la plupart des nuits"},
+      {id:"w"+wi+"-g4", label:"Marche 10 min apr\u00e8s les repas au moins 3\u00d7"},
+      {id:"w"+wi+"-g5", label:g5},
+    ],
+  };
+}
+
+// ── CHECKLIST ──────────────────────────────────────────────────────────────
+function renderCL() {
+  var wbtns = document.getElementById("wbtns");
+  wbtns.innerHTML = "";
+  for(var i=0; i<12; i++) {
+    var p = D.phases[i<3?0:i<7?1:2];
+    var b = document.createElement("button");
+    b.className = "wbtn";
+    b.style.background = i===curWk ? p.accent : "#fff";
+    b.style.borderColor = i===curWk ? p.accent : "#DDD";
+    b.style.color = i===curWk ? "#fff" : "#888";
+    b.textContent = "S" + (i+1);
+    (function(idx){ b.onclick = function(){ curWk=idx; renderCL(); }; })(i);
+    wbtns.appendChild(b);
+  }
+
+  var wk = getWk(curWk);
+  var secs = [
+    {id:"sp", label:"🏃\u200d♀️ Sport", items:wk.sport},
+    {id:"al", label:"🥗 Alimentation", items:wk.repas},
+    {id:"ba", label:"📦 Batch cooking dim.", items:wk.batch},
+    {id:"pl", label:"🍽️ Plats cuisin\u00e9s", items:wk.plats},
+    {id:"rg", label:"⚡ R\u00e8gles & bilan", items:wk.regles},
+  ];
+  var total = secs.reduce(function(s,sec){return s+sec.items.length;},0);
+  var done = secs.reduce(function(s,sec){return s+sec.items.filter(function(it){return ck[it.id];}).length;},0);
+  var pct = Math.round(done/total*100);
+
+  document.getElementById("wkhdr").innerHTML =
+    '<div style="background:'+wk.light+';border-radius:14px;padding:14px 16px;border-left:4px solid '+wk.acc+';margin-bottom:14px">' +
+    '<div style="font-size:10px;letter-spacing:3px;color:'+wk.acc+';font-family:monospace;text-transform:uppercase">'+wk.label+'</div>' +
+    '<div style="font-weight:700;font-size:17px;color:#111;margin:2px 0 10px">Phase · '+wk.phase+'</div>' +
+    '<div class="pb-wrap"><div class="pb"><div class="pb-fill" style="width:'+pct+'%;background:'+wk.acc+'"></div></div>' +
+    '<span style="font-size:13px;font-weight:700;color:'+wk.acc+'">'+done+'/'+total+'</span>' +
+    '<span style="font-size:12px;color:#888">'+pct+'%</span></div></div>';
+
+  var sc = document.getElementById("clsecs");
+  sc.innerHTML = "";
+  secs.forEach(function(sec) {
+    var secDone = sec.items.filter(function(it){return ck[it.id];}).length;
+    var secPct = Math.round(secDone/sec.items.length*100);
+    var isOpen = exp["cs"+sec.id] !== false;
+    var div = document.createElement("div");
+    div.className = "card";
+    div.style.marginBottom = "10px";
+    var dash = (secDone/sec.items.length)*100;
+    var doneText = secDone===sec.items.length ? "✅ Termin\u00e9 !" : secDone+"/"+sec.items.length+" fait"+(secDone>1?"s":"");
+    var itemsHtml = sec.items.map(function(item){
+      var isDone = !!ck[item.id];
+      return '<div class="ci" onclick="togCk(\''+item.id+'\')">' +
+        '<div class="cb '+(isDone?"on":"")+'" style="'+(isDone?"background:"+wk.acc+";border-color:"+wk.acc:"")+'">'+( isDone?"✓":"")+'</div>' +
+        '<div class="cl '+(isDone?"done":"")+'">'+
+        (item.day ? '<span class="cd" style="color:'+wk.acc+'">'+item.day+'</span>' : '')+
+        item.label+'</div></div>';
+    }).join("");
+    var completeTxt = secDone===sec.items.length ? '<div style="text-align:center;padding:10px 0 4px;font-size:13px;color:'+wk.acc+';font-weight:700">🎉 Section compl\u00e8te !</div>' : '';
+    div.innerHTML =
+      '<div class="cs-hdr" onclick="togSec(\'cs'+sec.id+'\')">' +
+      '<div style="flex:1"><div style="font-weight:700;font-size:14px;color:#111">'+sec.label+'</div>' +
+      '<div style="font-size:11px;color:'+(secDone===sec.items.length?wk.acc:"#AAA")+';margin-top:2px">'+doneText+'</div></div>' +
+      '<div class="rw"><svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.9" fill="none" stroke="#F0F0F0" stroke-width="3"/>' +
+      '<circle cx="18" cy="18" r="15.9" fill="none" stroke="'+wk.acc+'" stroke-width="3" stroke-dasharray="'+dash+' 100" stroke-linecap="round"/></svg>' +
+      '<div class="rw-pct" style="color:'+wk.acc+'">'+secPct+'%</div></div>' +
+      '<div class="arr">'+(isOpen?"▲":"▼")+'</div></div>' +
+      '<div class="cs-body '+(isOpen?"open":"")+'">'+itemsHtml+completeTxt+'</div>';
+    sc.appendChild(div);
+  });
+
+  var bilanItems = ["Poids lundi matin (kg)","Énergie générale (1–10)","Humeur (1–10)","Séances réalisées / 6","Craquages sucre (0 = parfait)","Observation / ressenti"];
+  var bilanHtml = '<div class="card" style="margin-bottom:10px"><div style="padding:14px 16px">' +
+    '<div style="font-weight:700;font-size:14px;margin-bottom:12px">📊 Bilan semaine '+(curWk+1)+'</div>';
+  bilanItems.forEach(function(lbl,i){
+    var val = bl["w"+curWk+"_"+i] || "";
+    bilanHtml += '<div class="bilan-row"><div style="font-size:13px;font-weight:700;color:#111;flex:1">'+lbl+'</div>' +
+      '<input class="bilan-input" type="text" value="'+val+'" onchange="svBl_item('+curWk+','+i+',this.value)" placeholder="..."></div>';
+  });
+  bilanHtml += '</div></div>';
+  document.getElementById("bilanbox").innerHTML = bilanHtml;
+
+  var vb = document.getElementById("vbox");
+  if(pct===100){
+    vb.innerHTML = '<div class="victory" style="background:'+wk.acc+'"><div style="font-size:32px;margin-bottom:6px">🏆</div><div style="color:#fff;font-weight:700;font-size:17px">Semaine '+(curWk+1)+' 100% valid\u00e9e !</div><div style="color:rgba(255,255,255,.8);font-size:13px;margin-top:4px">Tu es incroyable. Passe \u00e0 la semaine suivante →</div></div>';
+  } else { vb.innerHTML = ""; }
+}
+
+function togCk(id){ ck[id]=!ck[id]; svCk(); renderCL(); }
+function togSec(key){ exp[key]=exp[key]===false?true:false; renderCL(); }
+function svBl_item(wi,i,v){ bl["w"+wi+"_"+i]=v; svBl(); }
+function resetWk(){
+  var wk=getWk(curWk);
+  var allItems=[].concat(wk.sport,wk.repas,wk.batch,wk.plats,wk.regles);
+  allItems.forEach(function(it){delete ck[it.id];});
+  svCk(); renderCL();
+}
+
+// ── PROGRAMME ──────────────────────────────────────────────────────────────
+function renderPhBtns(){
+  var c=document.getElementById("phbtns"); c.innerHTML="";
+  D.phases.forEach(function(p,i){
+    var b=document.createElement("button");
+    b.className="ph-btn";
+    b.style.background=i===curPh?p.accent:"#fff";
+    b.style.borderColor=p.accent;
+    b.style.color=i===curPh?"#fff":"#888";
+    b.innerHTML=p.icon+"<br>"+p.num+'<br><span style="font-weight:400;font-size:10px">'+p.weeks+"</span>";
+    (function(idx){b.onclick=function(){curPh=idx;renderPh(idx);renderPhBtns();};})(i);
+    c.appendChild(b);
+  });
+}
+function renderPh(i){
+  renderPhBtns();
+  var p=D.phases[i];
+  var nutHtml=p.nutrition.map(function(n){return '<div class="li"><span class="li-ic">'+n.icon+'</span><span><strong>'+n.bold+'</strong>'+n.text+'</span></div>';}).join("");
+  var spHtml=p.sport.map(function(s){return '<div class="li"><span class="li-ic">'+s.icon+'</span>'+s.text+'</div>';}).join("");
+  var sucHtml=p.sucre.items.map(function(s){return '<div style="display:flex;gap:8px;margin-bottom:8px"><span style="color:'+p.accent+';font-weight:700">→</span><span style="font-size:13px;color:#444;line-height:1.5">'+s+'</span></div>';}).join("");
+  document.getElementById("phcont").innerHTML=
+    '<div style="background:'+p.light+';border-radius:14px;padding:16px;border-left:4px solid '+p.accent+';margin-bottom:12px">'+
+    '<div style="font-size:10px;letter-spacing:3px;color:'+p.accent+';font-family:monospace;text-transform:uppercase">'+p.weeks+'</div>'+
+    '<h2 style="font-size:20px;margin:4px 0 4px;color:#111">Phase '+p.num+' — '+p.title+'</h2>'+
+    '<p style="margin:0 0 8px;color:#555;font-size:13px">🎯 '+p.tagline+'</p>'+
+    '<span class="badge" style="background:'+p.accent+'">Perte estimée : '+p.poids+'</span></div>'+
+    '<div class="card" style="margin-bottom:10px"><div style="padding:16px"><div style="font-weight:700;font-size:14px;margin-bottom:12px">🥗 Alimentation</div>'+nutHtml+'</div></div>'+
+    '<div class="card" style="margin-bottom:10px"><div style="padding:16px"><div style="font-weight:700;font-size:14px;margin-bottom:12px">🏃\u200d♀️ Sport</div>'+spHtml+'</div></div>'+
+    '<div style="background:'+p.light+';border:1px dashed '+p.accent+';border-radius:14px;padding:16px;margin-bottom:20px">'+
+    '<div style="font-weight:700;font-size:13px;color:'+p.accent+';margin-bottom:10px">'+p.sucre.title+'</div>'+sucHtml+'</div>';
+}
+
+// ── PLANNING ──────────────────────────────────────────────────────────────
+function renderPlan(){
+  var grid=document.getElementById("wgrid"); grid.innerHTML="";
+  D.weekDays.forEach(function(d,i){
+    var sel=selDay===i;
+    var div=document.createElement("div");
+    div.className="dc";
+    div.style.background=sel?d.acc:d.color;
+    div.style.borderColor=sel?d.acc:"transparent";
+    div.innerHTML='<div class="dc-ic">'+d.icon+'</div><div class="dc-d" style="color:'+(sel?"#fff":"#333")+'">'+d.day+'</div><div class="dc-l" style="color:'+(sel?"rgba(255,255,255,.8)":"#888")+'">'+d.label+'</div>';
+    (function(idx,dd){div.onclick=function(){selDay=selDay===idx?null:idx;renderPlan();
+      var dtl=document.getElementById("ddtl");
+      if(selDay!==null){
+        dtl.style.display="block";
+        dtl.innerHTML='<div style="background:'+dd.color+';border-radius:14px;padding:16px;border-left:4px solid '+dd.acc+';margin-bottom:12px"><h3 style="font-size:16px;margin:0 0 6px;color:#111">'+dd.icon+' '+dd.day+' — '+dd.label+'</h3><p style="margin:0;font-size:13px;color:#444;line-height:1.6">'+dd.detail+'</p></div>';
+      }else{dtl.style.display="none";}
+    };})(i,d);
+    grid.appendChild(div);
+  });
+  var tl=document.getElementById("tl12"); tl.innerHTML="";
+  for(var i=0;i<12;i++){
+    var p=D.phases[i<3?0:i<7?1:2];
+    var s=new Date("2026-06-01"); s.setDate(s.getDate()+i*7);
+    var e=new Date(s); e.setDate(e.getDate()+6);
+    var fmt=function(d){return d.getDate()+"/"+(d.getMonth()+1);};
+    var rate=i<3?"−0,5/sem":i<7?"−0,8/sem":"−0,5/sem";
+    tl.innerHTML+='<div style="display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:'+(i<11?"1px solid #F8F8F8":"none")+'">'+
+      '<div style="width:28px;height:28px;border-radius:7px;background:'+p.light+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:'+p.accent+';flex-shrink:0;font-family:monospace">S'+(i+1)+'</div>'+
+      '<div style="flex:1"><div style="font-size:12px;color:#333">'+fmt(s)+' – '+fmt(e)+'</div><div style="font-size:11px;color:'+p.accent+'">'+p.title+'</div></div>'+
+      '<div style="font-size:10px;color:#fff;background:'+p.accent+';border-radius:6px;padding:2px 7px;font-family:monospace">'+rate+'</div></div>';
+  }
+}
+
+// ── REPAS ──────────────────────────────────────────────────────────────────
+function renderRepNav(){
+  var nav=document.getElementById("repsnav"); nav.innerHTML="";
+  var keys=["petitdej","dejeuner","diner","collation"];
+  keys.forEach(function(k){
+    var r=D.repasData[k];
+    var b=document.createElement("button");
+    b.className="sub-btn"+(k===curRep?" on":"");
+    b.style.background=k===curRep?r.accent:"#fff";
+    b.style.borderColor=k===curRep?r.accent:"#DDD";
+    b.style.color=k===curRep?"#fff":"#777";
+    b.textContent=r.icon+" "+r.label;
+    (function(key){b.onclick=function(){curRep=key;renderRepNav();renderRep();};})(k);
+    nav.appendChild(b);
+  });
+}
+function renderRep(){
+  renderRepNav();
+  var r=D.repasData[curRep];
+  document.getElementById("repcont").innerHTML=r.items.map(function(m,i){
+    var isOpen=!!exp["meal"+curRep+i];
+    var tagsHtml=m.tags.map(function(t){return '<span class="tag" style="background:'+(t.indexOf("tupp")>-1?r.accent:r.color)+';color:'+(t.indexOf("tupp")>-1?"#fff":r.accent)+'">'+t+'</span>';}).join("");
+    var bodyHtml=isOpen?'<div class="card-body open"><div style="background:'+r.color+';border-radius:10px;padding:12px;margin:12px 0 10px"><div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:'+r.accent+';font-family:monospace;margin-bottom:6px">Ingrédients</div><p style="margin:0;font-size:13px;color:#444;line-height:1.6">'+m.ingr+'</p></div><div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#888;font-family:monospace;margin-bottom:6px">Préparation</div><p style="margin:0;font-size:13px;color:#444;line-height:1.7">'+m.prep+'</p></div>':"";
+    return '<div class="card" style="border:1.5px solid '+(isOpen?r.accent:"transparent")+'">'+
+      '<div class="card-hdr" onclick="togMeal(\''+curRep+'\','+i+')">'+
+      '<div style="flex:1"><div style="margin-bottom:5px">'+tagsHtml+'</div>'+
+      '<div style="font-weight:700;font-size:14px;color:#111;margin-bottom:4px">'+m.name+'</div>'+
+      '<div style="display:flex;gap:12px"><span style="font-size:11px;color:#888">⏱ '+m.time+'</span><span style="font-size:11px;color:#888">'+m.cal+'</span>'+
+      '<span style="font-size:11px;color:'+r.accent+';font-weight:700">🥩 '+m.prot+'</span></div></div>'+
+      '<div class="arr">'+(isOpen?"▲":"▼")+'</div></div>'+bodyHtml+'</div>';
+  }).join("");
+}
+function togMeal(tab,i){ var k="meal"+tab+i; exp[k]=!exp[k]; renderRep(); }
+
+var jtMeals = {
+  course:[
+    {t:"Réveil",m:"Café ou thé · pas de sucre"},
+    {t:"Pré-course",m:"A jeun ou 1 banane si sortie > 60 min"},
+    {t:"Post-course",m:"2 oeufs + pain complet + skyr nature · dans les 20 min"},
+    {t:"Déjeuner",m:"Lentilles + riz brun + légumes rôtis + tofu"},
+    {t:"Collation 16h",m:"Skyr + noix + framboises"},
+    {t:"Dîner",m:"Tofu/tempeh + légumes verts + quinoa (petite portion)"},
+  ],
+  salle:[
+    {t:"Matin",m:"Avoine + lait végétal + graines de chanvre + fruit"},
+    {t:"Pré-salle",m:"Café 30 min avant · éventuellement 1 banane"},
+    {t:"Post-salle",m:"Skyr + protéine végétale ou 3 oeufs · OBLIGATOIRE < 30 min"},
+    {t:"Déjeuner",m:"Pois chiches rôtis + légumes + fromage de chèvre"},
+    {t:"Collation 16h",m:"1 poignée noix + 2 carrés choco 85%"},
+    {t:"Dîner",m:"Seitan ou tempeh + purée patate douce + haricots verts"},
+  ],
+  repos:[
+    {t:"Petit-déj",m:"Pancakes avoine + fromage blanc + fruits frais"},
+    {t:"Déjeuner",m:"Grand bol légumes + légumineuses + tahini"},
+    {t:"Collation",m:"Fruit entier + tisane"},
+    {t:"Dîner",m:"Soupe légumes épaisse + pain de seigle + fromage"},
+  ]
+};
+function setJT(t){
+  curJT=t;
+  document.querySelectorAll("#jtbtns .sub-btn").forEach(function(b,i){
+    var types=["course","salle","repos"];
+    b.classList.toggle("on",types[i]===t);
+    b.style.background=types[i]===t?"#0D1B2A":"#fff";
+    b.style.borderColor=types[i]===t?"#0D1B2A":"#DDD";
+    b.style.color=types[i]===t?"#fff":"#888";
+  });
+  renderJT();
+}
+function renderJT(){
+  var items=jtMeals[curJT];
+  document.getElementById("jtcont").innerHTML=items.map(function(m,i){
+    return '<div style="display:flex;gap:10px;align-items:flex-start;padding:7px 0;border-bottom:'+(i<items.length-1?"1px solid #F5F5F5":"none")+'">'+
+      '<div style="font-size:10px;color:#0D1B2A;background:#E8EAF6;border-radius:6px;padding:3px 7px;white-space:nowrap;font-family:monospace;flex-shrink:0">'+m.t+'</div>'+
+      '<span style="font-size:13px;color:#444;line-height:1.5">'+m.m+'</span></div>';
+  }).join("");
+}
+var protList = [
+  {name:"Spiruline",per:"57g",note:"1 c.à.c. dans smoothie — fer + protéines"},
+  {name:"Graines de chanvre",per:"31g",note:"Saupoudrer partout — dans yaourt, soupe"},
+  {name:"Seitan",per:"25g",note:"Si pas d\u2019intolérance gluten — très rassasiant"},
+  {name:"Tempeh",per:"19g",note:"⭐ Champion — aussi riche en probiotiques"},
+  {name:"Tofu ferme",per:"15g",note:"Dîner, déjeuner · Mariner pour le goût"},
+  {name:"Edamame",per:"11g",note:"Collation rapide ou entrée"},
+  {name:"Skyr / Fromage blanc 0%",per:"10–11g",note:"Post-séance, petit-déj, collation 16h"},
+  {name:"Lentilles cuites",per:"9g",note:"Déjeuner · Combo avec riz = protéine complète"},
+  {name:"Pois chiches",per:"9g",note:"Houmous, salades, rôtis au four"},
+  {name:"Oeufs",per:"6g/oeuf",note:"Petit-déj post-course · Rapide, complet"},
+];
+function renderProts(){
+  document.getElementById("protlist").innerHTML=protList.map(function(p,i){
+    return '<div class="prot-row"><div style="width:44px;height:28px;border-radius:7px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0">'+
+      '<span style="font-size:10px;font-weight:700;color:#fff;font-family:monospace">'+p.per+'</span></div>'+
+      '<div><div style="font-weight:700;font-size:13px;color:#fff">'+p.name+'</div>'+
+      '<div style="font-size:11px;color:#A8D8A8">'+p.note+'</div></div></div>';
+  }).join("");
+}
+
+// ── TUPPS ──────────────────────────────────────────────────────────────────
+function renderTupps(){
+  document.getElementById("tuppcont").innerHTML=D.tupps.map(function(t,i){
+    var isOpen=!!exp["tupp"+i];
+    var baseHtml=t.base.map(function(b){return '<div style="display:flex;gap:8px;margin-bottom:5px"><span style="color:'+t.accent+';font-weight:700">·</span><span style="font-size:13px;color:#444;line-height:1.5">'+b+'</span></div>';}).join("");
+    var bodyHtml=isOpen?'<div class="card-body open"><p style="font-size:13px;color:#555;line-height:1.6;margin:12px 0 10px">'+t.desc+'</p>'+
+      '<div style="background:'+t.color+';border-radius:10px;padding:12px;margin-bottom:10px">'+
+      '<div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:'+t.accent+';font-family:monospace;margin-bottom:8px">Ce qu\u2019il faut</div>'+baseHtml+'</div>'+
+      '<div style="background:#F9F7F4;border-radius:10px;padding:12px;margin-bottom:10px">'+
+      '<div style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:#888;font-family:monospace;margin-bottom:6px">💡 Astuce</div>'+
+      '<p style="margin:0;font-size:13px;color:#444;line-height:1.6">'+t.tips+'</p></div>'+
+      '<div style="background:'+t.color+';border-radius:8px;padding:8px 12px;text-align:center">'+
+      '<span style="font-size:10px;color:'+t.accent+';font-family:monospace">CONSERVATION · </span>'+
+      '<span style="font-size:12px;color:#333;font-weight:700">'+t.cons+'</span></div></div>':"";
+    return '<div class="card" style="margin-bottom:10px;border:1.5px solid '+(isOpen?t.accent:"transparent")+'">'+
+      '<div class="card-hdr" onclick="togTupp('+i+')">'+
+      '<div class="tupp-ic" style="background:'+t.color+'">'+t.emoji+'</div>'+
+      '<div style="flex:1"><div style="font-size:10px;color:'+t.accent+';font-family:monospace;text-transform:uppercase;letter-spacing:1px">'+t.cat+'</div>'+
+      '<div style="font-weight:700;font-size:14px;color:#111">'+t.name+'</div>'+
+      '<div style="display:flex;gap:10px;margin-top:2px"><span style="font-size:11px;color:#888">⏱ '+t.prep+'</span><span style="font-size:11px;color:#888">'+t.macro+'</span></div></div>'+
+      '<div class="arr">'+(isOpen?"▲":"▼")+'</div></div>'+bodyHtml+'</div>';
+  }).join("");
+}
+function togTupp(i){ exp["tupp"+i]=!exp["tupp"+i]; renderTupps(); }
+
+// ── SÉANCES ──────────────────────────────────────────────────────────────
+function renderSea(){
+  document.getElementById("seacont").innerHTML=D.seances.map(function(s,i){
+    var isOpen=!!exp["sea"+i];
+    var echauffHtml=s.echauff.length?'<div style="margin-bottom:12px"><div style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:7px">Échauffement</div>'+s.echauff.map(function(e){return '<div style="display:flex;gap:8px;margin-bottom:4px"><span style="color:'+s.acc+';font-weight:700">·</span><span style="font-size:13px;color:#444">'+e+'</span></div>';}).join("")+'</div>':"";
+    var blocsHtml=s.blocs.map(function(bloc){
+      var exosHtml=bloc.exos.map(function(ex){
+        return '<div class="exo-card"><div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:3px">'+
+          '<strong style="font-size:13px;color:#111;flex:1">'+ex.ex+'</strong>'+
+          (ex.sets?'<span style="font-size:10px;background:'+s.light+';color:'+s.acc+';border-radius:6px;padding:2px 7px;font-family:monospace;font-weight:700;flex-shrink:0;margin-left:8px">'+ex.sets+'</span>':'')+
+          '</div>'+(ex.charge?'<div style="font-size:11px;color:#888;margin-bottom:3px">⚖️ '+ex.charge+'</div>':'')+
+          (ex.note?'<div style="font-size:12px;color:#555;font-style:italic;line-height:1.5">→ '+ex.note+'</div>':'')+
+          '</div>';
+      }).join("");
+      return '<div style="margin-bottom:12px"><div class="bloc-lbl" style="background:'+s.acc+'">'+bloc.nom+'</div>'+exosHtml+'</div>';
+    }).join("");
+    var consHtml=s.conseils.map(function(c){return '<div style="display:flex;gap:8px;margin-bottom:6px"><span style="color:'+s.acc+';font-weight:700">→</span><span style="font-size:13px;color:#444;line-height:1.5">'+c+'</span></div>';}).join("");
+    var bodyHtml=isOpen?'<div class="card-body open">'+
+      '<p style="font-size:13px;color:#555;margin:12px 0 12px;line-height:1.6;background:'+s.light+';padding:10px 12px;border-radius:10px">🎯 '+s.obj+'</p>'+
+      echauffHtml+blocsHtml+
+      '<div style="background:#F0EDE8;border-radius:10px;padding:11px;margin-bottom:10px">'+
+      '<div style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:#888;margin-bottom:4px">Finisher</div>'+
+      '<p style="margin:0;font-size:13px;color:#444;line-height:1.5">'+s.finisher+'</p></div>'+
+      '<div style="background:'+s.light+';border-radius:10px;padding:11px">'+
+      '<div style="font-size:10px;font-family:monospace;text-transform:uppercase;letter-spacing:2px;color:'+s.acc+';margin-bottom:7px">💡 À savoir</div>'+
+      consHtml+'</div></div>':"";
+    return '<div class="card" style="margin-bottom:10px;border:1.5px solid '+(isOpen?s.acc:"transparent")+'">'+
+      '<div class="card-hdr" onclick="togSea('+i+')">'+
+      '<div style="width:52px;height:52px;border-radius:12px;background:'+s.light+';display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0">'+
+      '<span style="font-size:20px">'+s.emoji+'</span>'+
+      '<span style="font-size:9px;color:'+s.acc+';font-family:monospace;font-weight:700">'+s.cat+'</span></div>'+
+      '<div style="flex:1"><div style="font-weight:700;font-size:14px;color:#111;margin-bottom:3px">'+s.name+'</div>'+
+      '<div style="display:flex;gap:10px"><span style="font-size:11px;color:#888">⏱ '+s.duree+'</span><span style="font-size:11px;color:'+s.acc+';font-weight:700">'+s.niveau+'</span></div></div>'+
+      '<div class="arr">'+(isOpen?"▲":"▼")+'</div></div>'+bodyHtml+'</div>';
+  }).join("");
+}
+function togSea(i){ exp["sea"+i]=!exp["sea"+i]; renderSea(); }
+
+// ── ANTI-INFLAM ────────────────────────────────────────────────────────────
+var aiData = [
+  {title:"🟢 Aliments à PRIVILÉGIER",acc:"#1B5E20",light:"#E8F5E9",items:[
+    {icon:"🫐",name:"Baies (myrtilles, framboises, cerises)",effet:"Anthocyanes = anti-oxydants puissants · Réduisent les douleurs musculaires post-effort · Idéal : 1 poignée dans le skyr ou le smoothie"},
+    {icon:"🌿",name:"Oméga-3 végétaux (graines de lin, chanvre, chia, noix)",effet:"Réduisent les marqueurs d\u2019inflammation (CRP) · Essentiels pour les coureuses · 1 c.à.s. graines de chanvre dans chaque repas"},
+    {icon:"🧄",name:"Ail & oignon",effet:"Composés sulfurés = anti-inflammatoires naturels · Ajouter crus ou en fin de cuisson dans tous les plats"},
+    {icon:"🫚",name:"Huile d\u2019olive extra vierge",effet:"Oléocanthal = effet similaire à l\u2019ibuprofène · 2 c.à.s. par jour en assaisonnement · Ne pas chauffer fort"},
+    {icon:"🍵",name:"Thé vert & thé matcha",effet:"Catéchines = anti-inflammatoires · Remplacer 1 café sur 2 par du thé vert · Boire avant le sport aussi"},
+    {icon:"🌿",name:"Curcuma + poivre noir",effet:"Curcumine = anti-inflammatoire très puissant · TOUJOURS avec du poivre noir (absorption ×20) · Ajouter dans les currys, lentilles, smoothies"},
+    {icon:"🫚",name:"Gingembre frais",effet:"Gingerol = anti-inflammatoire et anti-nausée · Râper dans les plats asiatiques, les smoothies, les tisanes · Post-course ++"},
+    {icon:"🥦",name:"Légumes crucifères (brocoli, chou, roquette)",effet:"Sulforaphane = détoxifiant hépatique et anti-inflammatoire · 3-4 portions par semaine minimum"},
+    {icon:"🍫",name:"Chocolat noir 85%+",effet:"Flavonoïdes = anti-oxydants · 2 carrés par jour maximum · Réduit aussi le cortisol (hormone du stress)"},
+    {icon:"🥑",name:"Avocat",effet:"Graisses mono-insaturées + vitamine E · Anti-inflammatoire + satiété · Idéal dans les bowls et salades"},
+  ]},
+  {title:"🔴 Aliments à ÉVITER ou RÉDUIRE",acc:"#C62828",light:"#FFEBEE",items:[
+    {icon:"🍭",name:"Sucres raffinés & produits ultra-transformés",effet:"Augmentent la CRP (marqueur d\u2019inflammation) · Aggravent les douleurs articulaires · Ennemis n°1 de la récupération"},
+    {icon:"🧈",name:"Huiles végétales raffinées (tournesol, maïs, soja)",effet:"Riches en oméga-6 pro-inflammatoires · Remplacer par huile d\u2019olive ou de coco pour la cuisson"},
+    {icon:"🍞",name:"Gluten en excès (si sensibilité)",effet:"Peut augmenter la perméabilité intestinale · Varier avec riz, quinoa, patate douce"},
+    {icon:"🍷",name:"Alcool",effet:"Pro-inflammatoire direct + perturbe le sommeil + détruit le microbiote · Même 1 verre augmente les marqueurs d\u2019inflammation"},
+    {icon:"☕",name:"Caféine en excès (plus de 3 cafés/jour)",effet:"Augmente le cortisol = hormone inflammatoire · 1-2 cafés/jour c\u2019est ok · Privilégier thé vert après 14h"},
+  ]},
+  {title:"💊 Nutriments clés pour la coureuse végétarienne",acc:"#283593",light:"#E8EAF6",items:[
+    {icon:"🩸",name:"Fer (attention aux coureuses !)",effet:"La course détruit les globules rouges (hémolyse plantaire) · Sources végé : lentilles, épinards, graines de chanvre, spiruline · Toujours avec vitamine C pour absorption"},
+    {icon:"🦴",name:"Vitamine D",effet:"Déficience fréquente · Essentielle pour l\u2019immunité et la récupération musculaire · Supplémentation 1000-2000 UI/jour en automne-hiver"},
+    {icon:"🧲",name:"Magnésium",effet:"Perdu dans la sueur · Réduit les crampes et l\u2019inflammation · Sources : chocolat noir, graines de chanvre, légumes verts, amandes"},
+    {icon:"🌱",name:"Oméga-3 (EPA/DHA)",effet:"Difficile à couvrir avec les végétaux seuls · Supplémenter avec huile d\u2019algues (végane) 500-1000mg/jour · Réduit inflammation et douleurs articulaires"},
+    {icon:"🦠",name:"Probiotiques",effet:"Microbiote = 70% de l\u2019immunité · Tempeh, miso, kombucha, skyr · Réduisent l\u2019inflammation intestinale"},
+    {icon:"⚡",name:"Zinc",effet:"Essentiel pour la récupération et l\u2019immunité · Sources végé : graines de courge, légumineuses, noix de cajou"},
+  ]},
+  {title:"🍽️ Recettes spécial anti-inflammatoire",acc:"#E65100",light:"#FFF3E0",items:[
+    {icon:"🥤",name:"Golden milk (lait doré)",effet:"200ml lait végétal chauffé + 1 c.à.c. curcuma + pincée poivre noir + 1 c.à.c. miel cru + gingembre râpé · Boire le soir avant de dormir"},
+    {icon:"🥣",name:"Smoothie récup anti-inflam",effet:"Lait végétal + 1 poignée cerises surgelées + ½ banane + 1 c.à.c. gingembre + 1 c.à.c. curcuma + poivre + protéine végétale · Parfait post-course longue"},
+    {icon:"🫖",name:"Tisane récupération",effet:"Gingembre frais + curcuma + poivre + citron + miel cru · Faire infuser 10 min · Boire après chaque séance intense"},
+    {icon:"🥗",name:"Bowl anti-inflam parfait",effet:"Quinoa + edamame + avocat + épinards + tofu + sauce : huile olive + citron + ail + gingembre + curcuma + poivre · 3 fois par semaine"},
+  ]},
+  {title:"📅 Intégrer dans ta semaine",acc:"#6A1B9A",light:"#F3E5F5",items:[
+    {icon:"🏃",name:"Avant une course longue (veille)",effet:"Dîner riche en glucides complexes + curcuma + gingembre · Éviter les aliments nouveaux ou très gras"},
+    {icon:"💪",name:"Après une séance intense (dans les 2h)",effet:"Protéines + glucides + baies ou cerises + gingembre · Le smoothie récup anti-inflam ou le skyr + myrtilles"},
+    {icon:"😴",name:"Le soir (récupération nocturne)",effet:"Golden milk avant de dormir · Le corps se répare la nuit → lui donner les bons outils"},
+    {icon:"📆",name:"Chaque jour",effet:"Huile d\u2019olive sur tous les plats · Gingembre + curcuma + poivre dans la cuisine · Thé vert le matin · 1 poignée de baies"},
+  ]},
+];
+function renderAI(){
+  document.getElementById("aicont").innerHTML=aiData.map(function(sec,si){
+    var isOpen=exp["ai"+si]!==false;
+    var itemsHtml=sec.items.map(function(item,idx){
+      var bg=idx%2===0?sec.light:"#fff";
+      return '<div style="background:'+bg+';border-radius:10px;padding:12px;margin-bottom:8px">'+
+        '<div style="display:flex;gap:10px;align-items:flex-start">'+
+        '<span style="font-size:22px;flex-shrink:0">'+item.icon+'</span>'+
+        '<div><div style="font-weight:700;font-size:13px;color:#111;margin-bottom:4px">'+item.name+'</div>'+
+        '<div style="font-size:12px;color:#555;line-height:1.5">'+item.effet+'</div></div></div></div>';
+    }).join("");
+    return '<div class="card" style="margin-bottom:10px">'+
+      '<div style="padding:13px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;background:'+sec.light+'" onclick="togAI('+si+')">'+
+      '<div style="flex:1;font-weight:700;font-size:14px;color:'+sec.acc+'">'+sec.title+'</div>'+
+      '<div style="color:'+sec.acc+';font-size:14px">'+(isOpen?"▲":"▼")+'</div></div>'+
+      (isOpen?'<div style="padding:8px 16px 14px;border-top:1px solid '+sec.light+'">'+itemsHtml+'</div>':"")+'</div>';
+  }).join("");
+}
+function togAI(i){ exp["ai"+i]=exp["ai"+i]===false?true:false; renderAI(); }
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+renderCL();
+</script>
+</body>
+</html>
